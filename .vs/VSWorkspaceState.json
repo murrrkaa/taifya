@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\compiler",
+    "\\compiler\\src",
+    "\\compiler\\src\\ExampleLib",
+    "\\compiler\\tests",
+    "\\compiler\\tests\\ExampleLib.UnitTests"
+  ],
+  "SelectedNode": "\\compiler",
+  "PreviewInSolutionExplorer": false
+}
