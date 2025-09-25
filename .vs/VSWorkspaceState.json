@@ -7,6 +7,6 @@
     "\\compiler\\tests",
     "\\compiler\\tests\\ExampleLib.UnitTests"
   ],
-  "SelectedNode": "\\compiler",
+  "SelectedNode": "\\compiler\\tests\\ExampleLib.UnitTests\\LabTest1.cs",
   "PreviewInSolutionExplorer": false
 }

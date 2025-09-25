@@ -39,6 +39,7 @@ namespace ExampleLib
                     result += estern[digit];
                 }
             }
+
             return result;
         }
     }

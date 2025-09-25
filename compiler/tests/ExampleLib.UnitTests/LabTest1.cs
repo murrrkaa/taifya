@@ -1,4 +1,4 @@
-using ExampleLib.UnitTests.Helpers;
+п»їusing ExampleLib.UnitTests.Helpers;
 
 using Xunit;
 
@@ -9,18 +9,17 @@ public class LabTest1
     [Fact]
     public void CanAddLineNumbers()
     {
-
         const string unsorted = """
-                                Играют волны — ветер свищет,
-                                И мачта гнется и скрыпит…
-                                Увы! он счастия не ищет
-                                И не от счастия бежит!
+                                РРіСЂР°СЋС‚ РІРѕР»РЅС‹ вЂ” РІРµС‚РµСЂ СЃРІРёС‰РµС‚,
+                                Р РјР°С‡С‚Р° РіРЅРµС‚СЃСЏ Рё СЃРєСЂС‹РїРёС‚вЂ¦
+                                РЈРІС‹! РѕРЅ СЃС‡Р°СЃС‚РёСЏ РЅРµ РёС‰РµС‚
+                                Р РЅРµ РѕС‚ СЃС‡Р°СЃС‚РёСЏ Р±РµР¶РёС‚!
                                 """;
         const string sorted = """
-                              1. Играют волны — ветер свищет,
-                              2. И мачта гнется и скрыпит…
-                              3. Увы! он счастия не ищет
-                              4. И не от счастия бежит!
+                              1. РРіСЂР°СЋС‚ РІРѕР»РЅС‹ вЂ” РІРµС‚РµСЂ СЃРІРёС‰РµС‚,
+                              2. Р РјР°С‡С‚Р° РіРЅРµС‚СЃСЏ Рё СЃРєСЂС‹РїРёС‚вЂ¦
+                              3. РЈРІС‹! РѕРЅ СЃС‡Р°СЃС‚РёСЏ РЅРµ РёС‰РµС‚
+                              4. Р РЅРµ РѕС‚ СЃС‡Р°СЃС‚РёСЏ Р±РµР¶РёС‚!
                               """;
 
         using TempFile file = TempFile.Create(unsorted);
@@ -34,11 +33,11 @@ public class LabTest1
     [Fact]
     public void CanOneLineFile()
     {
-        using TempFile file = TempFile.Create("Играют волны — ветер свищет,");
+        using TempFile file = TempFile.Create("РРіСЂР°СЋС‚ РІРѕР»РЅС‹ вЂ” РІРµС‚РµСЂ СЃРІРёС‰РµС‚,");
         Lab1.AddLineNumbers(file.Path);
 
         string actual = File.ReadAllText(file.Path);
-        Assert.Equal("1. Играют волны — ветер свищет,", actual);
+        Assert.Equal("1. РРіСЂР°СЋС‚ РІРѕР»РЅС‹ вЂ” РІРµС‚РµСЂ СЃРІРёС‰РµС‚,", actual);
         Console.WriteLine("Test CanOneLineFile DONE ====================================================");
     }
 
