@@ -37,6 +37,7 @@
 | `round(x)`       | Округляет число до ближайшего целого                       |
 | `ceil(x)`        | Возвращает ближайшее целое, большее или равное переданному |
 | `floor(x)`       | Возвращает ближайшее целое, меньшее или равное переданному |
+| `readInt()`      | Считывает число                                            |
 
 ## Поддержка констант
 
@@ -52,8 +53,8 @@
 (* Список выражений *)
 expression_list = expression, { ",", expression } ;
 
-(* Основное выражение: операции сложения и вычитания *)
-expression = term_expression, { ("+" | "-"), term_expression } ;
+(* Основное выражение: операции сложения и вычитания, присваивание *)
+expression = identifier, "=", expression | term_expression, { ("+" | "-"), term_expression } ;
 
 (* Термы — операции умножения и деления *)
 term_expression = factor_expression, { ("*" | "/"), factor_expression } ;
@@ -62,13 +63,13 @@ term_expression = factor_expression, { ("*" | "/"), factor_expression } ;
 factor_expression = [ "+" | "-" ], simple_expression ;
 
 (* Простые выражения — числа, идентификаторы, функции, константы или подвыражения в скобках *)
-simple_expression = number | identifier | constant | function_call | "(", expression, ")" ;
+simple_expression = number | constant | function_call | identifier | "(", expression, ")" ;
 
 (* Вызовы функций *)
-function_call = function_name, "(", [ expression_list ], ")" ;
+function_call = (built_in_function | identifier), "(", [ expression_list ], ")" ;
 
 (* Имена встроенных функций *)
-function_name = "abs"| "min"| "max"| "round"| "ceil"| "floor" ;
+built_in_function = "abs"| "min"| "max"| "round"| "ceil"| "floor" | "readInt";
 
 (* Константы *)
 constant = "Pi" | "Euler" ;
