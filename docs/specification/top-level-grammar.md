@@ -19,7 +19,7 @@ print(a * a);
 // --- Определение пользовательской функции ---
 function add(p, q) {
   return p + q;
-}
+};
 
 // --- Вызов пользовательской функции ---
 var sum = add(x, y);
@@ -32,7 +32,6 @@ print(sum);
 
 ## Ключевые особенности
 
-* Программа состоит из инструкций и объявлений переменных, констант и функций.
 * Поддерживаются последовательное выполнение инструкций и ввод/вывод через встроенные функции `print` и `readInt`.
 * Язык поддерживает глобальную и локальную область видимости внутри функций.
 
@@ -53,12 +52,9 @@ print(sum);
 program = top_level_statement, { top_level_statement } ;
 
 (* Верхнеуровневая инструкция *)
-top_level_statement = (
-function_definition
-| variable_declaration
-| constant_declaration
-| statement
-), ";" ;
+top_level_statement =
+      function_definition
+    | (variable_declaration | constant_declaration | statement), ";" ;
 
 (* Объявление функции *)
 function_definition =
@@ -71,6 +67,8 @@ parameter_list = identifier, { ",", identifier } ;
 function_statement =
       assignment_statement
     | function_call_statement
+    | variable_declaration
+    | constant_declaration
     | print_statement
     | return_statement ;
 
@@ -90,10 +88,39 @@ assignment_statement = identifier, "=", expression ;
 statement =
       assignment_statement
     | function_call_statement
-    | print_statement ;    
+    | print_statement ; 
+       
 (* Вызов функции *)
 function_call_statement = (built_in_function | identifier), "(", [ expression_list ], ")" ;
 
 (* Ввод/вывод *)
 print_statement = "print", "(", [ expression_list ], ")" ;
+```
+
+## Примеры программ
+
+### SumNumbers
+
+```
+    var x = readInt();
+    var y = readInt();
+    var result = x + y;
+    print(result);
+```
+
+### CircleSquare
+
+```
+    const PiValue = 3.1415926535;
+    var radius = readInt();
+    var area = PiValue * radius * radius;
+    print(area); 
+```
+
+### FahrenheitToCelsius
+
+```
+    var fahrenheit = readInt();
+    var celsius = (fahrenheit - 32) * 5 / 9;
+    print(celsius);
 ```
