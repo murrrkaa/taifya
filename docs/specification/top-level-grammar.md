@@ -92,7 +92,7 @@ statement =
 (* Вызов функции *)
 function_call_statement = (built_in_function | identifier), "(", [ expression_list ], ")" ;
 
-(* Ввод/вывод *)
+(* Dывод *)
 print_statement = "print", "(", [ expression_list ], ")" ;
 ```
 
