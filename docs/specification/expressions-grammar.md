@@ -54,7 +54,7 @@
 expression_list = expression, { ",", expression } ;
 
 (* Основное выражение: операции сложения и вычитания, присваивание *)
-expression = identifier, "=", expression | term_expression, { ("+" | "-"), term_expression } ;
+expression = assignment_statement | term_expression, { ("+" | "-"), term_expression } ;
 
 (* Термы — операции умножения и деления *)
 term_expression = factor_expression, { ("*" | "/"), factor_expression } ;
