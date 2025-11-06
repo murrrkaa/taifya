@@ -110,9 +110,8 @@ print_statement = "print", "(", [ expression_list ], ")" ;
 ### CircleSquare
 
 ```
-    const PiValue = 3.1415926535;
     var radius = readInt();
-    var area = PiValue * radius * radius;
+    var area = PI * radius * radius;
     print(area); 
 ```
 
