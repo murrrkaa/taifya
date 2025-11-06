@@ -27,9 +27,6 @@ print(sum);
 
 ```
 
-## Примеры кода
-
-
 ## Ключевые особенности
 
 * Поддерживаются последовательное выполнение инструкций и ввод/вывод через встроенные функции `print` и `readInt`.
@@ -88,6 +85,8 @@ assignment_statement = identifier, "=", expression ;
 statement =
       assignment_statement
     | function_call_statement
+    | variable_declaration
+    | constant_declaration
     | print_statement ; 
        
 (* Вызов функции *)
