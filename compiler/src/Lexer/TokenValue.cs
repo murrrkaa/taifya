@@ -1,25 +1,24 @@
-﻿// src/Lexer/TokenValue.cs
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace LanguageLexer;
 
 public class TokenValue
 {
-    private readonly object _value;
+    private readonly object value;
 
     public TokenValue(string value)
     {
-        _value = value ?? throw new ArgumentNullException(nameof(value));
+        this.value = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public TokenValue(decimal value)
     {
-        _value = value;
+        this.value = value;
     }
 
     public override string ToString()
     {
-        return _value switch
+        return this.value switch
         {
             string s => s,
             decimal d => d.ToString(CultureInfo.InvariantCulture),
@@ -29,7 +28,7 @@ public class TokenValue
 
     public decimal ToDecimal()
     {
-        return _value switch
+        return this.value switch
         {
             string s => decimal.Parse(s, CultureInfo.InvariantCulture),
             decimal d => d,
@@ -41,10 +40,10 @@ public class TokenValue
     {
         if (obj is TokenValue other)
         {
-            return _value switch
+            return this.value switch
             {
-                string s => other._value is string os && s == os,
-                decimal d => other._value is decimal od && d == od,
+                string s => other.value is string os && s == os,
+                decimal d => other.value is decimal od && d == od,
                 _ => false
             };
         }
@@ -54,6 +53,6 @@ public class TokenValue
 
     public override int GetHashCode()
     {
-        return _value?.GetHashCode() ?? 0;
+        return this.value?.GetHashCode() ?? 0;
     }
 }
