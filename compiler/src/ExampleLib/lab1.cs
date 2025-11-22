@@ -4,17 +4,19 @@ using System.Text;
 
 namespace ExampleLib;
 
-public static class FileUtil
+public static class Lab1
 {
     /// <summary>
     /// Сортирует строки в указанном файле.
     /// Перезаписывает файл, но не атомарно: ошибка ввода-вывода при записи приведёт к потере данных.
     /// </summary>
-    public static void SortFileLines(string path)
+    public static void AddLineNumbers(string path)
     {
-        // Читаем и сортируем строки файла.
-        List<string> lines = File.ReadLines(path, Encoding.UTF8).ToList();
-        lines.Sort();
+        List<string> lines = new List<string>();
+        foreach (string line in File.ReadLines(path))
+        {
+            lines.Add($"{lines.Count + 1}. {line}");
+        }
 
         // Перезаписываем файл с нуля (режим Truncate).
         using FileStream file = File.Open(path, FileMode.Truncate, FileAccess.Write);

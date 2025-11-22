@@ -1,7 +1,7 @@
 ﻿// src/Lexer/TokenValue.cs
 using System.Globalization;
 
-namespace Lexer;
+namespace LanguageLexer;
 
 public class TokenValue
 {
@@ -48,6 +48,7 @@ public class TokenValue
                 _ => false
             };
         }
+
         return false;
     }
 

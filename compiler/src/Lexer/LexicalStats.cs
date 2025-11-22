@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lexer
+namespace LanguageLexer
 {
-    public class LexicalStats
+    public static class LexicalStats
     {
         public static string CollectFromFile(string filePath)
         {
             if (!File.Exists(filePath))
+            {
                 throw new FileNotFoundException($"File not found: {filePath}");
+            }
 
             string source = File.ReadAllText(filePath);
             return CollectFromSource(source);
@@ -19,7 +22,7 @@ namespace Lexer
 
         public static string CollectFromSource(string source)
         {
-            var lexer = new Lexer(source);
+            Lexer lexer = new Lexer(source);
 
             int keywords = 0;
             int identifier = 0;
@@ -33,7 +36,9 @@ namespace Lexer
             {
                 token = lexer.ParseToken();
                 if (token.Type == TokenType.EndOfFile)
+                {
                     continue;
+                }
 
                 switch (token.Type)
                 {

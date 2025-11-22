@@ -1,4 +1,4 @@
-﻿namespace Lexer
+﻿namespace LanguageLexer
 {
     public enum TokenType
     {
@@ -81,6 +81,7 @@
         ///  Литерал строки.
         /// </summary>
         String,
+
         /// <summary>
         ///  Оператор сложения.
         /// </summary>
@@ -191,5 +192,49 @@
         /// </summary>
         Error,
 
+        /// <summary>
+        ///  Возвращает модуль числа.
+        /// </summary>
+        Abs,
+
+        /// <summary>
+        ///  Возвращает наименьшее из переданных чисел.
+        /// </summary>
+        Min,
+
+        /// <summary>
+        ///  Возвращает наибольшее из переданных чисел.
+        /// </summary>
+        Max,
+
+        /// <summary>
+        ///  Округляет число до ближайшего целого.
+        /// </summary>
+        Round,
+
+        /// <summary>
+        ///  Возвращает ближайшее целое, большее или равное переданному.
+        /// </summary>
+        Ceil,
+
+        /// <summary>
+        ///  НВозвращает ближайшее целое, меньшее или равное переданному.
+        /// </summary>
+        Floor,
+
+        /// <summary>
+        ///  Число π.
+        /// </summary>
+        Pi,
+
+        /// <summary>
+        ///  Число Эйлера e.
+        ///  </summary>
+        Euler,
+
+        /// <summary>
+        ///  Считывает число.
+        ///  </summary>
+        ReadInt,
     }
 }

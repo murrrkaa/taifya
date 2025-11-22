@@ -1,35 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lexer
+namespace LanguageLexer
 {
     public class TestScanner
     {
-        private readonly string _text;
-        private int _position;
+        private readonly string text;
+        private int position;
+
         public TestScanner(string text)
         {
-            _text = text ?? throw new ArgumentNullException(nameof(text));
-            _position = 0;
+            this.text = text ?? throw new ArgumentNullException(nameof(text));
+            position = 0;
         }
 
         public char Peek(int n = 0)
         {
-            int position = _position + n;
-            return position >= _text.Length ? '\0' : _text[position];
+            int pos = position + n;
+            return pos >= text.Length ? '\0' : text[pos];
         }
 
         public void Advance()
         {
-            _position++;
+            position++;
         }
 
         public bool IsEnd()
         {
-            return _position >= _text.Length;
+            return position >= text.Length;
         }
     }
 }

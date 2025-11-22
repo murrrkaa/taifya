@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Text;
 
-namespace Lexer;
+namespace LanguageLexer;
 
 public class Lexer
 {
-
     private static readonly Dictionary<string, TokenType> Keywords = new()
     {
         { "var", TokenType.Var },
         { "const", TokenType.Const },
         { "if", TokenType.If },
-        { "else", TokenType.Else},
+        { "else", TokenType.Else },
         { "for", TokenType.For },
         { "while", TokenType.While },
         { "function", TokenType.Function },
@@ -20,26 +19,38 @@ public class Lexer
         { "continue", TokenType.Continue },
         { "print", TokenType.Print },
         { "and", TokenType.And },
-        { "or", TokenType.Or }
+        { "or", TokenType.Or },
+        
+         // новые функции
+        { "abs", TokenType.Abs },
+        { "min", TokenType.Min },
+        { "max", TokenType.Max },
+        { "round", TokenType.Round },
+        { "ceil", TokenType.Ceil },
+        { "floor", TokenType.Floor },
 
-
+        // числовые константы
+        { "Pi", TokenType.Pi },
+        { "Euler", TokenType.Euler },
     };
-    private readonly TestScanner _scanner;
+
+    private readonly TestScanner scanner;
+
     public Lexer(string text)
     {
-        _scanner = new TestScanner(text);
+        scanner = new TestScanner(text);
     }
 
     public Token ParseToken()
     {
         SkipWhiteSpacesAndComments();
 
-        if(_scanner.IsEnd())
+        if(scanner.IsEnd())
         {
             return new Token(TokenType.EndOfFile);
         }
 
-        char ch = _scanner.Peek();
+        char ch = scanner.Peek();
 
         if (char.IsLetter(ch))
         {
@@ -48,7 +59,7 @@ public class Lexer
 
         if (char.IsDigit(ch) || ch == '-')
         {
-            if (ch == '-' && char.IsDigit(_scanner.Peek(1)))
+            if (ch == '-' && char.IsDigit(scanner.Peek(1)))
             {
                 return ParseNumericLiteral();
             }
@@ -58,7 +69,7 @@ public class Lexer
                 return ParseNumericLiteral();
             }
         }
-        
+
         if(ch == '\'')
         {
             return ParseStringLiteral();
@@ -66,103 +77,105 @@ public class Lexer
 
         switch (ch)
         {
-            case ';': 
-                _scanner.Advance(); 
+            case ';':
+                scanner.Advance();
                 return new Token(TokenType.Semicolon);
-            case ',': 
-                _scanner.Advance(); 
+            case ',':
+                scanner.Advance();
                 return new Token(TokenType.Comma);
-            case ':': 
-                _scanner.Advance(); 
+            case ':':
+                scanner.Advance();
                 return new Token(TokenType.Colon);
-            case '{': 
-                _scanner.Advance(); 
+            case '{':
+                scanner.Advance();
                 return new Token(TokenType.OpenBrace);
-            case '}': 
-                _scanner.Advance(); 
+            case '}':
+                scanner.Advance();
                 return new Token(TokenType.CloseBrace);
-            case '(': 
-                _scanner.Advance(); 
+            case '(':
+                scanner.Advance();
                 return new Token(TokenType.OpenParenthesis);
-            case ')': 
-                _scanner.Advance(); 
+            case ')':
+                scanner.Advance();
                 return new Token(TokenType.CloseParenthesis);
-            case '[': 
-                _scanner.Advance(); 
+            case '[':
+                scanner.Advance();
                 return new Token(TokenType.OpenBracket);
-            case ']': 
-                _scanner.Advance(); 
+            case ']':
+                scanner.Advance();
                 return new Token(TokenType.CloseBracket);
-            case '+': 
-                _scanner.Advance(); 
+            case '+':
+                scanner.Advance();
                 return new Token(TokenType.PlusSign);
-            case '*': 
-                _scanner.Advance(); 
+            case '*':
+                scanner.Advance();
                 return new Token(TokenType.MultiplySign);
-            case '/': 
-                _scanner.Advance(); 
+            case '/':
+                scanner.Advance();
                 return new Token(TokenType.DivideSign);
 
             case '=':
-                _scanner.Advance();
-                if (_scanner.Peek() == '=')
+                scanner.Advance();
+                if (scanner.Peek() == '=')
                 {
-                    _scanner.Advance();
+                    scanner.Advance();
                     return new Token(TokenType.EqualThan);
                 }
+
                 return new Token(TokenType.AssignThan);
 
             case '!':
-                _scanner.Advance();
-                if (_scanner.Peek() == '=')
+                scanner.Advance();
+                if (scanner.Peek() == '=')
                 {
-                    _scanner.Advance();
+                    scanner.Advance();
                     return new Token(TokenType.NotEqualThan);
                 }
+
                 return new Token(TokenType.Error);
 
             case '<':
-                _scanner.Advance();
-                if (_scanner.Peek() == '=')
+                scanner.Advance();
+                if (scanner.Peek() == '=')
                 {
-                    _scanner.Advance();
+                    scanner.Advance();
                     return new Token(TokenType.LessThanOrEqual);
                 }
+
                 return new Token(TokenType.LessThan);
 
             case '>':
-                _scanner.Advance();
-                if (_scanner.Peek() == '=')
+                scanner.Advance();
+                if (scanner.Peek() == '=')
                 {
-                    _scanner.Advance();
+                    scanner.Advance();
                     return new Token(TokenType.GreaterThanOrEqual);
                 }
+
                 return new Token(TokenType.GreaterThan);
 
             case '-':
-                _scanner.Advance();
+                scanner.Advance();
                 return new Token(TokenType.MinusSign);
-
         }
 
-        _scanner.Advance();
+        scanner.Advance();
         return new Token(TokenType.Error, new TokenValue(ch.ToString()));
-
     }
 
     private Token ParseIdentifierOrKeywords()
     {
-        StringBuilder value = new StringBuilder(); 
-        value.Append(_scanner.Peek());
-        _scanner.Advance();
+        StringBuilder value = new StringBuilder();
+        value.Append(scanner.Peek());
+        scanner.Advance();
 
-        while (!_scanner.IsEnd())
+        while (!scanner.IsEnd())
         {
-            char ch = _scanner.Peek();
+            char ch = scanner.Peek();
             if(char.IsLetterOrDigit(ch))
             {
                 value.Append(ch);
-                _scanner.Advance();
+                scanner.Advance();
             }
             else
             {
@@ -175,39 +188,40 @@ public class Lexer
         {
             return new Token(type);
         }
+
         return new Token(TokenType.Identifier, new TokenValue(text));
     }
 
     private Token ParseStringLiteral()
     {
-        _scanner.Advance(); 
+        scanner.Advance();
         StringBuilder contents = new StringBuilder();
 
-        while (!_scanner.IsEnd() && _scanner.Peek() != '\'')
+        while (!scanner.IsEnd() && scanner.Peek() != '\'')
         {
-            if (_scanner.Peek() == '\\')
+            if (scanner.Peek() == '\\')
             {
-                _scanner.Advance(); 
-                if (_scanner.IsEnd())
+                scanner.Advance();
+                if (scanner.IsEnd())
                 {
                     return new Token(TokenType.Error);
                 }
 
-                char next = _scanner.Peek();
+                char next = scanner.Peek();
 
                 switch (next)
                 {
                     case '\'':
                         contents.Append('\'');
-                        _scanner.Advance();
+                        scanner.Advance();
                         break;
                     case '\\':
                         contents.Append('\\');
-                        _scanner.Advance();
+                        scanner.Advance();
                         break;
                     case 'n':
                         contents.Append('\n');
-                        _scanner.Advance();
+                        scanner.Advance();
                         break;
                     default:
                         return new Token(TokenType.Error);
@@ -215,33 +229,33 @@ public class Lexer
             }
             else
             {
-                contents.Append(_scanner.Peek());
-                _scanner.Advance();
+                contents.Append(scanner.Peek());
+                scanner.Advance();
             }
         }
 
-        if (_scanner.IsEnd())
+        if (scanner.IsEnd())
         {
             return new Token(TokenType.Error);
         }
 
-        _scanner.Advance(); 
+        scanner.Advance();
         return new Token(TokenType.String, new TokenValue(contents.ToString()));
     }
 
     private Token ParseNumericLiteral()
     {
         StringBuilder value = new StringBuilder();
-        if (_scanner.Peek() == '-')
+        if (scanner.Peek() == '-')
         {
             value.Append('-');
-            _scanner.Advance();
+            scanner.Advance();
         }
 
-        while (!_scanner.IsEnd() && char.IsDigit(_scanner.Peek()))
+        while (!scanner.IsEnd() && char.IsDigit(scanner.Peek()))
         {
-            value.Append(_scanner.Peek());
-            _scanner.Advance();
+            value.Append(scanner.Peek());
+            scanner.Advance();
         }
 
         if (value.Length == 0 || value.ToString() == "-")
@@ -249,17 +263,17 @@ public class Lexer
             return new Token(TokenType.Error, new TokenValue(value.ToString()));
         }
 
-        if (!_scanner.IsEnd() && _scanner.Peek() == '.')
+        if (!scanner.IsEnd() && scanner.Peek() == '.')
         {
             value.Append('.');
-            _scanner.Advance();
+            scanner.Advance();
 
-            int fractionStart = value.Length; 
+            int fractionStart = value.Length;
 
-            while (!_scanner.IsEnd() && char.IsDigit(_scanner.Peek()))
+            while (!scanner.IsEnd() && char.IsDigit(scanner.Peek()))
             {
-                value.Append(_scanner.Peek());
-                _scanner.Advance();
+                value.Append(scanner.Peek());
+                scanner.Advance();
             }
 
             if (value.Length == fractionStart)
@@ -283,41 +297,48 @@ public class Lexer
 
     private void SkipWhiteSpaces()
     {
-        while (!_scanner.IsEnd() && char.IsWhiteSpace(_scanner.Peek()))
+        while (!scanner.IsEnd() && char.IsWhiteSpace(scanner.Peek()))
         {
-            _scanner.Advance();
+            scanner.Advance();
         }
     }
+
     private bool TryParseMultilineComment()
     {
-        if(_scanner.Peek() == '/' && _scanner.Peek(1) == '*')
+        if(scanner.Peek() == '/' && scanner.Peek(1) == '*')
         {
-            _scanner.Advance();
-            _scanner.Advance(); 
-            while (!_scanner.IsEnd())
+            scanner.Advance();
+            scanner.Advance();
+            while (!scanner.IsEnd())
             {
-                if(_scanner.Peek() == '*' && _scanner.Peek(1) == '/')
+                if(scanner.Peek() == '*' && scanner.Peek(1) == '/')
                 {
-                    _scanner.Advance();
-                    _scanner.Advance();
+                    scanner.Advance();
+                    scanner.Advance();
                     return true;
                 }
-                _scanner.Advance();
+
+                scanner.Advance();
             }
+
             return true;
         }
+
         return false;
     }
+
     private bool TryParseSingleLineComment()
     {
-        if(_scanner.Peek() == '#')
+        if(scanner.Peek() == '#')
         {
-            while(!_scanner.IsEnd() && _scanner.Peek() != '\n')
+            while(!scanner.IsEnd() && scanner.Peek() != '\n')
             {
-                _scanner.Advance();
+                scanner.Advance();
             }
+
             return true;
         }
+
         return false;
     }
 }
