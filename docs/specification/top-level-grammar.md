@@ -19,7 +19,7 @@ print(a * a);
 // --- Определение пользовательской функции ---
 function add(p, q) {
   return p + q;
-};
+}
 
 // --- Вызов пользовательской функции ---
 var sum = add(x, y);
@@ -64,39 +64,45 @@ program = top_level_statement, { top_level_statement } ;
 (* Верхнеуровневая инструкция *)
 top_level_statement =
       function_definition
-    | (variable_declaration | constant_declaration | statement), ";" ;
+    | simple_statement, ";" 
+    | matched_if_statement
+    | unmatched_if_statement ;
 
 (* Объявление функции *)
 function_definition =
     "function", identifier, "(", [ parameter_list ], ")",
     "{", { function_statement }, "}" ;
 
+(* Параметры функции *)
 parameter_list = identifier, { ",", identifier } ;
 
 (* Инструкции внутри функций *)
 function_statement =
-      basic_statement
-    | return_statement
+      simple_statement, ";"
     | matched_if_statement
-    | unmatched_if_statement ;
+    | unmatched_if_statement
+    | return_statement
+    | while_statement
+    | for_statement ;
 
 (* Return только внутри функций *)
-return_statement = "return", expression ;
+return_statement = "return", expression, ";" ;
 
 (* Инструкции *)
 statement =
-      basic_statement
+      simple_statement, ";"
     | matched_if_statement
-    | unmatched_if_statement ; 
-    
-basic_statement =
+    | unmatched_if_statement
+    | while_statement
+    | for_statement 
+    | function_definition ;
+
+simple_statement =
       assignment_statement
     | function_call_statement
     | variable_declaration
     | constant_declaration
-    | print_statement 
-    | while_statement
-    | for_statement ;
+    | print_statement ;
     
 (* Объявление переменной *)
 variable_declaration = "var", identifier, "=", expression ;
@@ -114,7 +120,7 @@ function_call_statement = (built_in_function | identifier), "(", [ expression_li
 print_statement = "print", "(", [ expression_list ], ")" ;
 
 (* Блок инструкций *)
-block = "{", { statement, ";" }, "}" ;
+block = "{", { statement }, "}" ;
 
 (* Конструкция if с else *)
 matched_if_statement =
@@ -132,19 +138,18 @@ break_statement = "break" ;
 continue_statement = "continue" ;
 
 (* Блок инструкций для циклов (может содержать break/continue) *)
-loop_block = "{", { loop_statement, ";" }, "}" ;
+loop_block = "{", { loop_statement }, "}" ;
 
 (* Инструкции внутри циклов *)
 loop_statement =
-      assignment_statement
-    | function_call_statement
-    | variable_declaration
-    | constant_declaration
-    | print_statement
+    simple_statement, ";"
+    | continue_statement, ";"
+    | break_statement, ";"
     | matched_if_statement
     | unmatched_if_statement
-    | break_statement
-    | continue_statement ;
+    | while_statement
+    | for_statement 
+    | function_definition ;
     
 (* Цикл while *)
 while_statement = "while", "(", expression, ")", loop_block ;
@@ -233,7 +238,7 @@ else
         if (n - (n / i) * i == 0) 
         {
             isPrime = 0;
-        };
+        }
         i = i + 1;
     }
 }
