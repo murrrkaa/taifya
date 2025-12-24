@@ -20,13 +20,11 @@
 
 ## Приоритет операторов
 
-| Приоритет (по убыванию) | Операторы               |
-|-------------------------|-------------------------|
-| 5                       | `+`, `-`, `!` (унарные) |
-| 4                       | `*`, `/`                |
-| 3                       | `+`, `-` (бинарные)     |
-| 2                       | `and`                   |
-| 1                       | `or`                    |
+| Приоритет (по убыванию) | Операторы           |
+|-------------------------|---------------------|
+| 3                       | `+`, `-` (унарные)  |
+| 2                       | `*`, `/`            |
+| 1                       | `+`, `-` (бинарные) |
 
 
 ## Встроенные функции
@@ -55,27 +53,14 @@
 (* Список выражений *)
 expression_list = expression, { ",", expression } ;
 
-(* Основное выражение: операции присваивания и логического ИЛИ *)
-expression = assignment_statement | logical_or_expression ;
-
-(* Логическое ИЛИ *)
-logical_or_expression = logical_and_expression, { "or", logical_and_expression } ;
-
-(* Логическое И *)
-logical_and_expression = comparison_expression, { "and", comparison_expression } ;
-
-(* Сравнения: ==, !=, <, <=, >, >= *)
-comparison_expression = additive_expression,
-                        [ ("==" | "!=" | "<" | "<=" | ">" | ">="), additive_expression ] ;
-
-(* Операции сложения и вычитания *)
-additive_expression = term_expression, { ("+" | "-"), term_expression } ;
+(* Основное выражение: операции сложения и вычитания, присваивание *)
+expression = assignment_statement | term_expression, { ("+" | "-"), term_expression } ;
 
 (* Термы — операции умножения и деления *)
 term_expression = factor_expression, { ("*" | "/"), factor_expression } ;
 
-(* Факторы — унарные операции + и - и НЕ *)
-factor_expression = [ "+" | "-" | "!" ], simple_expression ;
+(* Факторы — унарные операции + и - *)
+factor_expression = [ "+" | "-" ], simple_expression ;
 
 (* Простые выражения — числа, идентификаторы, функции, константы или подвыражения в скобках *)
 simple_expression = number | constant | function_call | identifier | "(", expression, ")" ;
@@ -93,7 +78,7 @@ constant = "Pi" | "Euler" ;
 identifier = ( letter | "_" ), { letter | digit | "_" } ;
 
 (* Числовые литералы *)
-number = digit, { digit }, [ ".", digit, { digit } ] ;
+number = [ "+" | "-" ], digit, { digit }, [ ".", digit, { digit } ] ;
 
 letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
 | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T"
