@@ -76,13 +76,7 @@ public class Parser
 
     private void ParseConstDeclaration()
     {
-        Token nameToken = tokens.Peek();
-        tokens.Advance();
-        if (nameToken.Type != TokenType.Identifier)
-        {
-            throw new UnexpectedLexemeException(TokenType.Identifier, nameToken);
-        }
-
+        Token nameToken = Match(TokenType.Identifier);
         Match(TokenType.AssignThan);
         decimal value = ParseExpression();
         context.DefineConstant(nameToken.Value!.ToString(), value);
@@ -90,13 +84,7 @@ public class Parser
 
     private void ParseAssignment()
     {
-        Token nameToken = tokens.Peek();
-        tokens.Advance();
-        if (nameToken.Type != TokenType.Identifier)
-        {
-            throw new UnexpectedLexemeException(TokenType.Identifier, nameToken);
-        }
-
+        Token nameToken = Match(TokenType.Identifier);
         Match(TokenType.AssignThan);
         decimal value = ParseExpression();
         context.AssignVariable(nameToken.Value!.ToString(), value);
