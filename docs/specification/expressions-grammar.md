@@ -66,7 +66,7 @@ factor_expression = [ "+" | "-" ], simple_expression ;
 simple_expression = number | constant | function_call | identifier | "(", expression, ")" ;
 
 (* Вызовы функций *)
-function_call = (built_in_function | identifier), "(", [ expression_list ], ")" ;
+function_call = built_in_function, "(", [ expression_list ], ")" ;
 
 (* Имена встроенных функций *)
 built_in_function = "abs"| "min"| "max"| "round"| "ceil"| "floor" | "readInt";

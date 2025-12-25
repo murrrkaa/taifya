@@ -49,28 +49,7 @@ print(sum);
 program = top_level_statement, { top_level_statement } ;
 
 (* Верхнеуровневая инструкция *)
-top_level_statement =
-      function_definition
-    | (variable_declaration | constant_declaration | statement), ";" ;
-
-(* Объявление функции *)
-function_definition =
-    "function", identifier, "(", [ parameter_list ], ")",
-    "{", { function_statement }, "}" ;
-
-parameter_list = identifier, { ",", identifier } ;
-
-(* Инструкции внутри функций *)
-function_statement =
-      assignment_statement
-    | function_call_statement
-    | variable_declaration
-    | constant_declaration
-    | print_statement
-    | return_statement ;
-
-(* Return только внутри функций *)
-return_statement = "return", [ expression ] ;
+top_level_statement = variable_declaration | constant_declaration | statement, ";" ;
 
 (* Объявление переменной *)
 variable_declaration = "var", identifier, "=", expression ;
@@ -90,7 +69,7 @@ statement =
     | print_statement ; 
        
 (* Вызов функции *)
-function_call_statement = (built_in_function | identifier), "(", [ expression_list ], ")" ;
+function_call_statement = built_in_function, "(", [ expression_list ], ")" ;
 
 (* Dывод *)
 print_statement = "print", "(", [ expression_list ], ")" ;
