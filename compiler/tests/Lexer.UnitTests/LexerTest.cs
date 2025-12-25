@@ -1,7 +1,7 @@
-﻿using Xunit;
-using Lexer;
+﻿using LanguageLexer;
+using Xunit;
 
-namespace Lexer.UnitTests;
+namespace LexerTests;
 
 public class LexerTests
 {
@@ -287,14 +287,13 @@ public class LexerTests
                 var y = 2;
                 """,
                 new List<Token>
-                { 
+                {
                     new Token(TokenType.Var),
                     new Token(TokenType.Identifier, new TokenValue("y")),
                     new Token(TokenType.AssignThan),
                     new Token(TokenType.Number, new TokenValue("2")),
                     new Token(TokenType.Semicolon),
                 }
-
             },
         };
     }

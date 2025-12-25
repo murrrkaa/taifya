@@ -18,9 +18,10 @@ public class Lexer
         { "break", TokenType.Break },
         { "continue", TokenType.Continue },
         { "print", TokenType.Print },
+        { "readInt", TokenType.ReadInt },
         { "and", TokenType.And },
         { "or", TokenType.Or },
-        
+
          // новые функции
         { "abs", TokenType.Abs },
         { "min", TokenType.Min },
@@ -52,25 +53,28 @@ public class Lexer
 
         char ch = scanner.Peek();
 
-        if (char.IsLetter(ch))
+        if (char.IsLetter(ch) || ch == '_')
         {
             return ParseIdentifierOrKeywords();
         }
 
-        if (char.IsDigit(ch) || ch == '-')
+        if (char.IsDigit(ch) || ch == '-' || ch == '+')
         {
-            if (ch == '-' && char.IsDigit(scanner.Peek(1)))
+            if (ch == '-' || ch == '+')
             {
-                return ParseNumericLiteral();
+                if (char.IsDigit(scanner.Peek(1)))
+                {
+                    return ParseNumericLiteral();
+                }
             }
 
-            if(char.IsDigit(ch))
+            if (char.IsDigit(ch))
             {
                 return ParseNumericLiteral();
             }
         }
 
-        if(ch == '\'')
+        if (ch == '\'')
         {
             return ParseStringLiteral();
         }
@@ -172,7 +176,7 @@ public class Lexer
         while (!scanner.IsEnd())
         {
             char ch = scanner.Peek();
-            if(char.IsLetterOrDigit(ch))
+            if (char.IsLetterOrDigit(ch) || ch == '_')
             {
                 value.Append(ch);
                 scanner.Advance();
@@ -246,9 +250,9 @@ public class Lexer
     private Token ParseNumericLiteral()
     {
         StringBuilder value = new StringBuilder();
-        if (scanner.Peek() == '-')
+        if (scanner.Peek() == '-' || scanner.Peek() == '+')
         {
-            value.Append('-');
+            value.Append(scanner.Peek());
             scanner.Advance();
         }
 

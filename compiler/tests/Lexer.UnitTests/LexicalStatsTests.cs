@@ -1,8 +1,9 @@
 ﻿using System.IO;
+using LanguageLexer;
+using LexerTests.Helpers;
 using Xunit;
-using Lexer.UnitTests.Helpers;
 
-namespace Lexer.UnitTests;
+namespace LexerTests;
 
 public class LexicalStatsTests
 {
