@@ -1,5 +1,4 @@
 ﻿using Execution;
-
 using Xunit;
 
 namespace LanguageInterpreter.Specs;
