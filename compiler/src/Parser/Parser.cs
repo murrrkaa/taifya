@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-
 using Execution;
-
 using LanguageLexer;
 
 namespace LanguageParser;
@@ -46,42 +44,31 @@ public class Parser
 
     private void ParseStatement()
     {
-        Token token = tokens.Peek();
-
-        switch (token.Type)
+        switch (tokens.Peek().Type)
         {
             case TokenType.Var:
                 Match(TokenType.Var);
                 ParseVarDeclaration();
                 break;
-
             case TokenType.Const:
                 Match(TokenType.Const);
                 ParseConstDeclaration();
                 break;
-
             case TokenType.Print:
                 Match(TokenType.Print);
                 ParsePrintStatement();
                 break;
-
             case TokenType.Identifier:
                 ParseAssignment();
                 break;
             default:
-                throw new Exception($"Неизвестная инструкция: {token.Type}");
+                throw new Exception($"Неизвестная инструкция: {tokens.Peek().Type}");
         }
     }
 
     private void ParseVarDeclaration()
     {
-        Token nameToken = tokens.Peek();
-        tokens.Advance();
-        if (nameToken.Type != TokenType.Identifier)
-        {
-            throw new UnexpectedLexemeException(TokenType.Identifier, nameToken);
-        }
-
+        Token nameToken = Match(TokenType.Identifier);
         Match(TokenType.AssignThan);
         decimal value = ParseExpression();
         context.DefineVariable(nameToken.Value!.ToString(), value);
@@ -265,7 +252,7 @@ public class Parser
         return BuiltinFunctions.Invoke(functionName, arguments);
     }
 
-    private void Match(TokenType expected)
+    private Token Match(TokenType expected)
     {
         Token actual = tokens.Peek();
 
@@ -275,5 +262,6 @@ public class Parser
         }
 
         tokens.Advance();
+        return actual;
     }
 }
