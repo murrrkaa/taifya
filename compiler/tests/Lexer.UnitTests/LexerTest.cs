@@ -1,7 +1,7 @@
-﻿using Xunit;
-using Lexer;
+﻿using LanguageLexer;
+using Xunit;
 
-namespace Lexer.UnitTests;
+namespace LexerTests;
 
 public class LexerTests
 {
@@ -25,6 +25,17 @@ public class LexerTests
                     new Token(TokenType.Identifier, new TokenValue("x")),
                     new Token(TokenType.AssignThan),
                     new Token(TokenType.Number, new TokenValue("10")),
+                    new Token(TokenType.Semicolon),
+                }
+            },
+            {
+                "var _temp = 5;",
+                new List<Token>
+                {
+                    new Token(TokenType.Var),
+                    new Token(TokenType.Identifier, new TokenValue("_temp")),
+                    new Token(TokenType.AssignThan),
+                    new Token(TokenType.Number, new TokenValue("5")),
                     new Token(TokenType.Semicolon),
                 }
             },
@@ -165,13 +176,13 @@ public class LexerTests
                 }
             },
             {
-                "var a = 42; var b = -3.14;",
+                "var a = +42; var b = -3.14;",
                 new List<Token>
                 {
                     new Token(TokenType.Var),
                     new Token(TokenType.Identifier, new TokenValue("a")),
                     new Token(TokenType.AssignThan),
-                    new Token(TokenType.Number, new TokenValue("42")),
+                    new Token(TokenType.Number, new TokenValue("+42")),
                     new Token(TokenType.Semicolon),
                     new Token(TokenType.Var),
                     new Token(TokenType.Identifier, new TokenValue("b")),
@@ -287,14 +298,13 @@ public class LexerTests
                 var y = 2;
                 """,
                 new List<Token>
-                { 
+                {
                     new Token(TokenType.Var),
                     new Token(TokenType.Identifier, new TokenValue("y")),
                     new Token(TokenType.AssignThan),
                     new Token(TokenType.Number, new TokenValue("2")),
                     new Token(TokenType.Semicolon),
                 }
-
             },
         };
     }

@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lexer
+namespace LanguageLexer
 {
     public class Token
     {
-        public TokenType Type { get; }
-        public TokenValue? Value { get; }
-
         public Token(TokenType type, TokenValue? value = null)
         {
             Type = type;
             Value = value;
         }
+
+        public TokenType Type { get; }
+
+        public TokenValue? Value { get; }
+
         public override bool Equals(object? obj)
         {
             return obj is Token other && Type == other.Type && Equals(Value, other.Value);
@@ -28,14 +30,14 @@ namespace Lexer
 
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append(Type);
             if (Value is { } v)
             {
                 sb.Append($" ({v})");
             }
+
             return sb.ToString();
         }
     }
 }
-
