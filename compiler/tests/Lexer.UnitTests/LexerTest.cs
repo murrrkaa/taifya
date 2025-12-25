@@ -29,6 +29,17 @@ public class LexerTests
                 }
             },
             {
+                "var _temp = 5;",
+                new List<Token>
+                {
+                    new Token(TokenType.Var),
+                    new Token(TokenType.Identifier, new TokenValue("_temp")),
+                    new Token(TokenType.AssignThan),
+                    new Token(TokenType.Number, new TokenValue("5")),
+                    new Token(TokenType.Semicolon),
+                }
+            },
+            {
                 "const name = 'Kate';",
                 new List<Token>
                 {
@@ -165,13 +176,13 @@ public class LexerTests
                 }
             },
             {
-                "var a = 42; var b = -3.14;",
+                "var a = +42; var b = -3.14;",
                 new List<Token>
                 {
                     new Token(TokenType.Var),
                     new Token(TokenType.Identifier, new TokenValue("a")),
                     new Token(TokenType.AssignThan),
-                    new Token(TokenType.Number, new TokenValue("42")),
+                    new Token(TokenType.Number, new TokenValue("+42")),
                     new Token(TokenType.Semicolon),
                     new Token(TokenType.Var),
                     new Token(TokenType.Identifier, new TokenValue("b")),
