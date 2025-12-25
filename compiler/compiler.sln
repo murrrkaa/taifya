@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Execution", "src\Execution\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interpreter.Specs", "tests\Interpreter.Specs\Interpreter.Specs.csproj", "{53763EF8-5539-4BBF-9B75-3BF696475B80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		TODO.txt = TODO.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,5 +132,8 @@ Global
 		{27A043E2-D22B-409E-8BF8-5A58EC9A7B99} = {B4C68BC1-722B-4069-9E4D-7E7FB04FA20A}
 		{71616CE8-808F-4517-82A1-6BF192EAAF09} = {B4C68BC1-722B-4069-9E4D-7E7FB04FA20A}
 		{53763EF8-5539-4BBF-9B75-3BF696475B80} = {CE774A12-53F2-4F94-ADFA-96E36863AED4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E398FCC-7CDB-4891-92BA-EF7D283263A8}
 	EndGlobalSection
 EndGlobal
