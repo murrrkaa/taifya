@@ -61,4 +61,21 @@ public class InterpreterSpecs
 
         Assert.Equal(new decimal[] { 20m }, env.Results.ToArray());
     }
+
+    [Fact]
+    public void ChainedAssignment_X_Equals_Y_Equals_5_ShouldAssign5ToBoth()
+    {
+        string code = @"
+        var x = 0;
+        var y = 0;
+        x = y = 5;
+        print(x, y);
+        ";
+
+        FakeEnvironment env = new FakeEnvironment();
+        Interpreter interpreter = new Interpreter(env);
+        interpreter.Execute(code);
+
+        Assert.Equal(new decimal[] { 5m, 5m }, env.Results.ToArray());
+    }
 }

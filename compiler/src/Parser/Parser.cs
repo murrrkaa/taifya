@@ -59,7 +59,7 @@ public class Parser
                 ParsePrintStatement();
                 break;
             case TokenType.Identifier:
-                ParseAssignment();
+                ParseExpression();
                 break;
             default:
                 throw new Exception($"Неизвестная инструкция: {tokens.Peek().Type}");
@@ -80,14 +80,6 @@ public class Parser
         Match(TokenType.AssignThan);
         decimal value = ParseExpression();
         context.DefineConstant(nameToken.Value!.ToString(), value);
-    }
-
-    private void ParseAssignment()
-    {
-        Token nameToken = Match(TokenType.Identifier);
-        Match(TokenType.AssignThan);
-        decimal value = ParseExpression();
-        context.AssignVariable(nameToken.Value!.ToString(), value);
     }
 
     private void ParsePrintStatement()
@@ -112,8 +104,27 @@ public class Parser
 
     private decimal ParseExpression()
     {
-        decimal value = ParseTermExpression();
+        return ParseAssignment();
+    }
 
+    private decimal ParseAssignment()
+    {
+        if (tokens.Peek().Type == TokenType.Identifier && tokens.Peek(1).Type == TokenType.AssignThan)
+        {
+            Token nameToken = tokens.Peek();
+            tokens.Advance();
+            tokens.Advance();
+            decimal right = ParseAssignment();
+            context.AssignVariable(nameToken.Value!.ToString(), right);
+            return right;
+        }
+
+        return ParseAdditive();
+    }
+
+    private decimal ParseAdditive()
+    {
+        decimal value = ParseTermExpression();
         while (true)
         {
             switch (tokens.Peek().Type)
